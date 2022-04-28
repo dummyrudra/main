@@ -1,0 +1,9 @@
+.friend-list::-webkit-scrollbar {
+    background-color: rgb(231, 147, 147) !important;
+    width: 7px !important;
+}
+
+.friend-list::-webkit-scrollbar-thumb {
+    background: rgb(94, 94, 204) !important;
+    border-radius: 10px !important;
+}

@@ -1,0 +1,153 @@
+<!-- *ngIf ........................................-->
+
+<!-- <div *ngIf="movies.length>0">List of movies</div>
+<div *ngIf="movies.length===0"> No movies yet</div> -->
+
+<!-- <div *ngIf="movies.length>0; then moviesList else nomovies">
+
+</div>
+  <ng-template #moviesList>
+    List of movies
+  </ng-template>
+  <ng-template #nomovies>
+    No movies yet
+  </ng-template> -->
+<!-- 
+  <div [hidden]=" movies.length===0">List of movies</div>
+  <div [hidden]="movies.length>0">No movies yet</div> -->
+
+<!--*ngSwitchCase................................................................-->
+<div class="container">
+  <div class="row">
+    <div class="col offset-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="viewMode==='map'" aria-current="page" (click)="viewMode='map'">Map
+            View</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="viewMode==='list'" (click)="viewMode='list'">List View</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div [ngSwitch]="viewMode">
+  <div *ngSwitchCase="'map'">
+    <div class="container">
+      <div class="row">
+        <div class="col offset-3">
+          <zippy title="Shipping Details">Shipping Details Content</zippy>
+          <zippy title="Billing Details">Billing Details Content</zippy>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="'list'">
+    <!-- <ul>
+      <li *ngFor="let movie of movies">
+          {{movie.id+' - '+movie.name}}
+      </li>
+    </ul> -->
+    <div class="container">
+      <div class="row">
+        <div class="col offset-3">
+          <div *ngIf="movies.length===0">
+            <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+            <span class="">Loading...</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col offset-3">
+          <input type="text" [(ngModel)]="searchItem" (keyup)="searchMovie(searchItem)" placeholder="Type to search..."
+            [appInputFormate]="'uppercase'" />
+          <select [(ngModel)]="filterTerm" id="selectGenre" class="mx-4" (change)="filterMovie(filterTerm)">
+            <option selected value="">All Movies</option>
+            <option *ngFor="let genre of genres" value="{{ genre }}">{{ genre }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 offset-3">
+          <table class="table  table-responsive">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Action</th>
+                <th>
+                  <button class="btn btn-outline-primary p-0" data-bs-toggle="modal" data-bs-target="#editModal"
+                    (click)="cancelUpdateMovie()"><i class="bi bi-plus-circle-fill">Add Movie</i></button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let movie of movies;even as isEven;trackBy:trackCoures;">
+                <td>{{ movie.id}}</td>
+                <td>{{ movie.name }}</td>
+                <td>{{ movie.genre}}
+                <td colspan="2">
+                  <button class="btn btn-sm btn-outline-secondary"
+                    (click)="cancelUpdateMovie();SelectMovieToUpdate(movie)" data-bs-toggle="modal"
+                    data-bs-target="#editModal"><i class="bi bi-pencil"></i> </button>
+                  <button class="btn btn-sm btn-outline-danger mx-2 " (click)="deleteMovie(movie)"><i
+                      class="bi bi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">{{btnName || 'Add Movie'}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <form class="row g-3 needs-validation" [class.was-validated]="errors.length>0?true:false" novalidate>
+        <div class="modal-body">
+          <div class="col-md-12">
+            <label for="movieName" class="form-label">Movie Name</label>
+            <input type="text" class="form-control" id="movieName" [(ngModel)]="movieName" name="movieName" required>
+            <div class="invalid-feedback">
+              Please provide a valid movie name.
+            </div>
+          </div>
+          <div class="col-md-12">
+            <label for="genre" class="form-label">Genre</label>
+            <select class="form-select" id="genre" required [(ngModel)]="genre" id="selectGenre"
+              (change)="validateForm()" name="genre">
+              <option selected disabled value="">Select Genre</option>
+              <option *ngFor="let genre of genres" value="{{ genre }}">{{ genre }}</option>
+            </select>
+            <div class="invalid-feedback">
+              Please select a valid genre.
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary mx-2" type="submit" (click)="btnName?updateMovie():addMovie(movieName,genre)"
+            [disabled]="errors.length>0 || errors[0]?.length>0 && errors[1]?.length>0" data-bs-dismiss="modal">{{btnName
+            || 'Add
+            Movie'}}</button>
+          <button class="btn btn-secondary mx-2" data-bs-dismiss="modal">Cancel</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

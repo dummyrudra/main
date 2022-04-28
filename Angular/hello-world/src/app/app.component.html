@@ -1,0 +1,18 @@
+<h1>Angular</h1>
+
+<bootstrap-card> 
+     <!-- <div class="header">Card Header</div>
+    <div class="body">Card Body</div>  -->                 <!-- With div --> 
+    <!-- <div class="footer">Card Footer</div>   -->
+     <ng-container class="header">Card Header</ng-container>
+     <ng-container class="body">Card Body</ng-container>        <!-- only content will render -->
+     <ng-container class="footer">Card Footer</ng-container>
+ </bootstrap-card>
+
+
+<counter></counter>
+{{post.likesCount}}
+<favorite [isFavorite]="post.isFavorite" (change)=onFavoriteChanged($event)></favorite><br />
+<courses></courses>
+<router-outlet></router-outlet>
+

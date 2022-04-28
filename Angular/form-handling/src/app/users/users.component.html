@@ -1,0 +1,267 @@
+<div class="container" *ngIf="showLoader">
+    <div class="row">
+        <div class="col text-center mt-5">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="!showLoader">
+    <form #filterBy="ngForm" (ngSubmit)="manipulateData(filterBy)">
+        <div class="row  mt-3">
+            <div class="col-md-4">
+                <label for="userType" class="col-form-label me-2">User Type :</label>
+                <select id="userType" name="userType" class="col-form-select" ngModel #userType="ngModel">
+                    <option selected value="">All</option>
+                    <option value="0">User</option>
+                    <option value="1">Admin</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="userStatus" class="col-form-label me-2">User Status :</label>
+                <select id="userStatus" name="userStatus" class="col-form-select" ngModel #userStatus="ngModel">
+                    <option selected value="">All</option>
+                    <option value="0">Deactive</option>
+                    <option value="1">Active</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input type="search" id="search" name="search" class="col-form-select" ngModel #search="ngModel"
+                    style="padding:0px;margin:0px auto;border:0;outline:none;border-bottom: 1px solid;"
+                    placeholder="Type name to filter the users...">
+
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-12 text-end">
+                <button type="submit" class="btn btn-success me-2">
+                    <span *ngIf="showApplyLoader" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
+                    {{showApplyLoader?'Loading...':'Apply'}}</button>
+                <button type="reset" (click)="manipulateData({})" class="btn btn-secondary"><span
+                        *ngIf="showResetLoader" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
+                    {{showResetLoader?'Loading...':'Clear'}}</button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col mt-1">
+            <div class="text-end">
+                <!-- showing page {{page}} out of {{(users?.length)/itemsPerPage | number:'1.0-0'}} -->
+                <pagination-controls *ngIf="users?.length>0" #u (pageChange)="pageChanged($event)" id="usersPagination"
+                    previousLabel="Previous" [maxSize]="7" [directionLinks]="true" [responsive]="false" nextLabel="Next"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                    screenReaderCurrentLabel="You're on page" [autoHide]="true">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12  mt-1  shadow p-3 mb-5 bg-body rounded overflow-auto" *ngIf="users?.length>0">
+            <div style="min-height:280px">
+                <table class="table table-hover table-borderless align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Avatar</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Active</th>
+                            <th scope="col">Role</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let user of users | paginate:{id:'usersPagination',itemsPerPage,currentPage:page,totalItems:users?.length}">
+                            <td>
+                                <a [routerLink]="['profile',user?._id]" data-bs-toggle="tooltip"
+                                    data-bs-placement="bottom" [title]="'View '+user?.name + 's Profile'">
+
+                                    <img [src]="(!user?.file && tempUrl) || imageUrl+user?.file | sanitizerUrl"
+                                        class="img-fluid rounded-circle" style="width:30px;height: 30px;"
+                                        onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'">
+                                </a>
+                            </td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <span class="badge rounded-pill"
+                                    [ngClass]="user.isActive?'alert-success':'alert-danger'">{{user.isActive?'Active':'Deactive'}}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge rounded-pill"
+                                    [ngClass]="user?.isAdmin?'alert-success':'alert-danger'">{{user?.isAdmin?'Admin':'User'}}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <div *ngIf="user?._id!==currentUser?._id">
+                                    <button class="btn btn-sm " (click)="handleFriendRequest(user)" [ngClass]="
+                                    {
+                                        'btn-outline-danger':user.status==='Remove Friend','btn-outline-primary':user.status==='Send Request','btn-outline-secondary':user.status==='Cancel Request','btn-outline-success':user.status==='sent'
+                                    }">
+                                        <i class="bi " [ngClass]="
+                                        {
+                                        'bi-dash-circle-fill':user.status==='Remove Friend','bi-person-plus-fill':user.status==='Send Request','bi-x-circle-fill':user.status==='Cancel Request','bi-check-circle':user.status==='sent'
+                                    }
+                                        "></i>
+                                        <span class="mx-1">{{user.status==="sent"?'Accept':user.status}}</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-secondary mx-2" *ngIf="user.status==='sent'"
+                                        (click)="handleFriendRequest(user,'cancel')">
+                                        <i class="bi bi-x-circle-fill"></i>
+                                        <span class="mx-1">Cancel</span>
+                                    </button>
+                                </div>
+
+                            </td>
+                            <td>
+                                <button type="button" (click)="selectUser(user)"
+                                    *ngIf="(currentUser?.isAdmin && !user?.isAdmin)|| user?._id===currentUser?._id"
+                                    class="btn btn-sm btn-outline-primary m-1" data-bs-toggle="modal"
+                                    data-bs-target="#updateModal" [attr.data-bs-whatever]="user"><i
+                                        class="bi bi-pencil-square"></i></button>
+
+
+                                <button class="btn btn-sm btn-outline-danger m-1"
+                                    *ngIf="(currentUser?.isAdmin && !user?.isAdmin)  && user?._id!==currentUser._id"
+                                    (click)="deleteUser(user)">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary m-1" (click)="    viewUser(user)">
+                                    <i class="bi bi-info-circle-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div *ngIf="users?.length===0" class=" col mt-5 alert alert-danger alert-dismissible fade show text-center">
+            <strong>There is no users are available.</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="update" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="update">Update User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="updateImageUrl('')"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form" (ngSubmit)="updateUser()">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name<span class="required">*</span></label>
+                        <input type="text" formControlName="name" name="name" id="name" class="form-control"
+                            [value]="name.value">
+                        <div *ngIf="!name.valid && name.touched">
+                            <div class="text-danger" *ngIf="name.errors?.['required']">Name is required</div>
+                            <div class="text-danger" *ngIf="name.errors?.['maxlength']">Name should be maximum
+                                {{name?.errors?.['maxlength']?.requiredLength}} characters</div>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email<span class="required">*</span></label>
+                        <input type="email" formControlName="email" name="email" id="email" class="form-control"
+                            [value]="email.value">
+                        <div *ngIf="email.pending">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="text-success mx-1">Checking for uniqueness...</span>
+                        </div>
+                        <div class="text-danger" *ngIf="email.errors?.['shouldBeUnique']">Email has already been
+                            taken
+                        </div>
+                        <div *ngIf="!email.valid && email.touched">
+                            <div class="text-danger" *ngIf="email.errors?.['required']">Email is required</div>
+                            <div class="text-danger" *ngIf="email.errors?.['email']">Email is should be valid email
+                            </div>
+                            <div class="text-danger" *ngIf="email.errors?.['maxlength']">Email should be maximum
+                                {{email?.errors?.['maxlength']?.requiredLength}} characters</div>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Avatar<span class="required">*</span></label>
+                        <label class="btn">
+                            <div class="text-start m-2 text-primary" *ngIf="(selectedUser?.file) && (file.value)">
+                                <img [src]="(imageUrl+selectedUser?.file) | sanitizerUrl"
+                                    onload="this.style='display:block;'"
+                                    onerror="this.style='display:none';this.width=0"
+                                    class="img-fluid img-thumbnail rounded w-50" #userImg />
+                                <i class=bi-image-alt *ngIf="userImg.width<=0 && !userImg.src.startsWith('blob')"></i>
+                                <h6 *ngIf="showCropper" class="text-dark text-muted mx-3">Existing </h6>
+                            </div>
+                            <input type="file" style="display:none" class="form-control" name="file"
+                                (change)="onFileSelect($event)" formControlName="file" name="file" id="file" />
+
+                            <div *ngIf="!file.valid && file.touched">
+                                <div class="text-danger" *ngIf="file.errors?.['required']">Avatar is required</div>
+                                <div class="text-danger" *ngIf="file.errors?.['invalidFileExtension']">Only jpg and png
+                                    files
+                                    are allowed</div>
+                            </div>
+                        </label>
+                        <div class="row">
+                            <div class="text-center col" [style.display]="showCropper ? null : 'none'">
+                                <image-cropper [imageChangedEvent]="imageChangedEvent" [roundCropper]="true"
+                                    [maintainAspectRatio]="true" [aspectRatio]="4 / 4" format="png"
+                                    (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
+                                    (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"
+                                    [cropperMinWidth]="80" [cropperMinHeight]="80" [containWithinAspectRatio]="true"
+                                    style="height:auto;width:100%">
+                                </image-cropper>
+                                <h6 class="text-muted">Crop</h6>
+                            </div>
+                            <div class="text-center col mt-1" [style.display]="showCropper ? null : 'none'">
+                                <img [src]="croppedImage" style="height:auto;width:100%"
+                                    class="border border-secondary rounded-circle" />
+                                <h6 class="text-muted">Preview</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="currentUser?.isAdmin && !selectedUser?.isAdmin">
+
+                        <div class="mb-3 form-check">
+
+                            <input type="checkbox" class="form-check-input" name="isAdmin" formControlName="isAdmin"
+                                name="isAdmin" id="isAdmin" [checked]="isAdmin?.value" />
+
+                            <label for="isAdmin" class="form-check-label">isAdmin<span class="required">*</span></label>
+                        </div>
+                        <div class="mb-3 form-check">
+
+                            <input type="checkbox" class="form-check-input" name="isActive" formControlName="isActive"
+                                name="isActive" id="isActive" [checked]="isActive?.value" />
+
+                            <label for="isActive" class="form-check-label">isActive<span
+                                    class="required">*</span></label>
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Update" [disabled]="!form.valid"
+                            data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            (click)="updateImageUrl('')">Close</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

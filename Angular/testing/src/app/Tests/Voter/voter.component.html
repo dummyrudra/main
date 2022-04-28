@@ -1,0 +1,20 @@
+<div class="container">
+    <div class="row">
+        <div class="col-1">
+            <h1>
+                <i class=" upVote bi text-primary" [class.bi-hand-thumbs-up-fill]="myVote===1 "
+                    [class.bi-hand-thumbs-up]="myVote!==1 " (click)="upVote()"></i>
+            </h1>
+        </div>
+        <div class="col-1 ">
+            <h1 class="vote-count text-primary">{{totalVotes}}</h1>
+        </div>
+        <div class="col-1">
+            <h1 style="height:20px;width:20px;display:inline-block">
+
+                <i class=" downVote bi text-primary" [class.bi-hand-thumbs-down-fill]="myVote===-1 "
+                    [class.bi-hand-thumbs-down]="myVote!==-1 " (click)="downVote()"></i>
+            </h1>
+        </div>
+    </div>
+</div>

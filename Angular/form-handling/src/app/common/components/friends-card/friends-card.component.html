@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row">
+        <div class="card-header bg-primary text-white d-flex col-8 offset-2 mt-3">Friends</div>
+        <div class="d-flex col-8 offset-2 mt-2  shadow mb-5 bg-body rounded"
+            style="overflow-x: auto; white-space: nowrap;">
+            <div *ngFor="let friend of friends" class="mb-2">
+                <div class="card mx-2" style="width: 80px" *ngIf="friend.status==='success'">
+                    <a class="text-dark" [routerLink]="['../',friend?.user?._id]" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom" [title]="'View '+friend?.user?.name + ' Profile'">
+                        <div>
+                            <div style="min-height:75px ;" class="text-center text-primary">
+                                <img [src]="imageUrl+friend?.user?.file" style="width:75px;height: 75px;"
+                                    class="rounded-circle card-img-top img-responsive" alt="..."
+                                    onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'">
+                            </div>
+
+                            <div class="card-body  ">
+                                <strong class="card-title text-truncate d-inline-block"
+                                    style="max-width: 60px;">{{friend.user?.name?.split(" ")[0]}}</strong>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+            <div class="mb-2" *ngIf="isNoFriends(friends)">
+                There is no friends. </div>
+
+        </div>
+    </div>
+</div>

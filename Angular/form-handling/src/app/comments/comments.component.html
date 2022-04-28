@@ -1,0 +1,56 @@
+<div class="container" *ngIf="showLoader">
+    <div class="row">
+        <div class="col text-center mt-5">
+
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="conatiner" *ngIf="
+!showLoader">
+    <div class="row" class="overflow-auto d-inline-block w-100 comments-bar" style="max-height:250px;"
+        #commentsContainer>
+        <div class="col" *ngIf="comments?.length>0">
+            <div class="comments" *ngFor="let comment of comments">
+                <div class="mb-4">
+                    <div class="user-avatar float-start me-3 bg-light p-2 rounded">
+                        <a [routerLink]="['../../../users/profile/',comment?.user?._id]"
+                            class="text-dark text-decoration-none">
+                            <img [src]="imageUrl+comment?.user?.file" class="img-responsive rounded-circle"
+                                style="width:30px;height: 30px;"
+                                onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'" />
+                        </a>
+                    </div>
+                    <div class="mx-5 p-2 rounded-3" style="background:#E5E4E2;">
+                        <div class="user-name ">
+                            <a [routerLink]="['../../../users/profile/',comment?.user?._id]"
+                                class="text-dark text-decoration-none clickable">
+                                <strong>{{comment?.user?.name}}</strong>
+                            </a>
+                        </div>
+                        <div class="comment-content">
+                            <span class="comment">
+                                {{comment.comment}}
+                            </span>
+                            <span class="comment-timestamp text-muted float-end">
+                                <small>{{comment.updatedAt | date:'short'}}</small>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col text-center" *ngIf="comments?.length===0">
+            There is no comment.
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <comment-form [user]="user" [post]="post" (newCommentEvent)="addNewComment($event,commentsContainer)">
+            </comment-form>
+        </div>
+    </div>
+</div>

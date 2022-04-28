@@ -1,0 +1,34 @@
+<div style="border-bottom:0.1px solid silver;min-width:99.1%">
+    <a [routerLink]="['/','chats']" class="list-group-item  text-center text-white fs-4 bg-success position-sticky"
+        aria-current="true" style="height:56px">Friends</a>
+    <div class="list-group  overflow-auto friend-list p-0" style="max-height:290px;"
+        *ngIf="friends?.length>0;else noFriend">
+
+        <div class="" *ngFor="let friend of friends">
+            <a [routerLink]=" ['/','chats']" [queryParams]="{friend:friend?.user?._id}"
+                [class.active]="friendId===friend?.user?._id" class="list-group-item" aria-current=" true">
+                <a (click)="$event.stopPropagation()" [routerLink]="['/','users','profile',friend?.user?._id]"
+                    class="text-dark">
+                    <span class="d-inline-block text-center" style="min-height: 40px;min-width:40px">
+
+                        <img [src]="imageUrl+friend?.user?.file" class="img-responsive rounded-circle"
+                            style="width:40px;height: 40px;"
+                            onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'" />
+                    </span>
+                </a>
+                <span class="fw-bolder mx-2">{{ friend?.user?.name | titlecase}}</span>
+            </a>
+        </div>
+    </div>
+    <ng-template #noFriend>
+        <div class="list-group">
+            <a [routerLink]=" ['/','chats']" class="list-group-item" aria-current=" true">
+                You don't have friends! Add from
+                <a [routerLink]="['/','users']">
+                    here...
+                </a>
+
+            </a>
+        </div>
+    </ng-template>
+</div>

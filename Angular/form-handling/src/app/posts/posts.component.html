@@ -1,0 +1,49 @@
+<div class="container" *ngIf="showLoader">
+    <div class="row">
+        <div class="col text-center mt-5">
+
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="!showLoader">
+    <div class="row">
+        <div class="col">
+            <form [formGroup]="form" class="mt-5">
+                <div class="text-center">Add Post Form</div>
+                <div class="text-danger" *ngIf="!form.valid && form?.errors?.['badRequest']">
+                    {{form?.errors?.['badRequest']}}
+                </div>
+                <div class="form-group">
+                    <input type="text" placeholder="Type any title to post" name="title" id="title" class="form-control"
+                        formControlName="title" #input (keyup.enter)="createPost(input)">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4" *ngFor="let post of posts">
+            <div class="card mb-3 mt-3 h-100">
+                <div class="card-header">
+                    <span class="badge bg-info">{{post.id}}</span>
+                    <i class="bi text-success float-end" [ngClass]="post.isRead===true?'bi-circle':'bi-circle-fill'"
+                        (click)="updatePost(post)" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        [title]="post.isRead?'Mark as unread':'Mark as read'"></i>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title overflow-auto">{{post.title}}</h5>
+                    <p class="card-text overflow-auto">{{post.body}}</p>
+
+                </div>
+                <div class="card-footer">
+                    <input type="button" class="btn btn-sm btn-primary" (click)="updatePost(post)" value="Update"
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        [title]="post.isRead?'Mark as unread':'Mark as read'" />
+                    <input type="button" class="btn btn-sm btn-danger mx-2" (click)="deletePost(post)" value="Delete" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

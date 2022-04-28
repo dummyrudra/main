@@ -1,0 +1,92 @@
+<div class="container">
+    <div class="row">
+        <div class="col-6 offset-3 mt-5  shadow p-3 mb-5 bg-body rounded">
+            <div class="fs-4 text-center">Contact Form</div>
+            <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
+                <div class="mb-3 " ngModelGroup="fullName" name="fullName" #fullName="ngModelGroup">
+                    <div class="mb-3 form-floating">
+
+                        <input type="text" id="firstName" ngModel name="firstName" #firstName="ngModel"
+                            class="form-control" required minlength="3" pattern="apple" />
+                        <label for="firstName" class="form-label">
+                            First Name
+                            <span class="required">*</span></label>
+                        <div *ngIf="firstName.touched && !firstName.valid">
+                            <div class="text-danger" *ngIf="firstName.errors?.['required']">First name is required
+                            </div>
+                            <div class="text-danger" *ngIf="firstName.errors?.['minlength']">First name must be
+                                atleast
+                                {{firstName.errors?.['minlength']['requiredLength']}} characters
+                            </div>
+                            <div class="text-danger"
+                                *ngIf="firstName.errors?.['pattern'] && !firstName.errors?.['minlength']">First name
+                                doesn't
+                                match the pattern
+                                {{firstName.errors?.['pattern']['requiredPattern'] }}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mb-3 form-floating">
+
+                        <input type="text" id="lastName" ngModel name="lastName" #lastName="ngModel"
+                            class="form-control" required minlength="3" pattern="orange" />
+                        <label for="lastName" class="form-label">
+                            Last Name
+                            <span class="required">*</span></label>
+                        <div *ngIf="lastName.touched && !lastName.valid">
+                            <div class="text-danger" *ngIf="lastName.errors?.['required']">Last name is required
+                            </div>
+                            <div class="text-danger" *ngIf="lastName.errors?.['minlength']">Last name must be
+                                atleast
+                                {{lastName.errors?.['minlength']['requiredLength']}} characters
+                            </div>
+                            <div class="text-danger"
+                                *ngIf="lastName.errors?.['pattern'] && !lastName.errors?.['minlength']">Last name
+                                doesn't
+                                match the pattern
+                                {{lastName.errors?.['pattern']['requiredPattern'] }}
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="mb-3 form-floating">
+                    <select ngModel #contactMethod="ngModel" name="contactMethod" required id="contactMethod"
+                        class="form-select">
+                        <option value="">Please select</option>
+                        <option *ngFor="let method of contactMethods" [ngValue]="method">{{method.name}}</option>
+                    </select>
+                    <label for="contactMethod">Contact Methods<span class="required">*</span></label>
+                    <div *ngIf="!contactForm.valid && contactMethod.touched">
+                        <div class="text-danger" *ngIf="contactMethod.errors?.['    ']">
+                            Select atleast one of the following
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3 form-floating">
+
+                    <textarea id="comment" ngModel #comment name="comment" class="form-control"></textarea>
+                    <label for="comment">
+                        Comment
+                        <span class="required">*</span></label>
+                </div>
+                <div class="mb-3 form-check form-check-inline" *ngFor="let method of contactMethods">
+                    <input type="radio" name="contact" id="contact" class="form-check-input" ngModel contact="ngModel"
+                        [value]="method">
+                    <label for="contact">{{method.name}}<span class="required">*</span></label>
+
+                </div>
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="isSubscribed" name="isSubscribed" ngModel
+                        #isSubscribed="ngModel">
+                    <label for="isSubscribed" class="form-check-label">Subscribe<span class="required">*</span></label>
+
+                </div>
+                <p>{{contactForm.value | json}}</p>
+                <input type="submit" class="btn btn-primary" [disabled]="!contactForm.valid">
+            </form>
+        </div>
+    </div>
+</div>

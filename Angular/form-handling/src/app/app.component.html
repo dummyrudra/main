@@ -1,0 +1,8 @@
+<!-- <nav-tabs (selectedNav)="switchTab($event)" [defaultTab]="selectedNav"></nav-tabs>
+<contact-form *ngIf="selectedNav?.id === 1"> </contact-form>
+<signup-form *ngIf="selectedNav?.id === 2"> </signup-form> -->
+<ngx-loading-bar [includeSpinner]="false" color="#3f51b5" height="4px" ref="router"></ngx-loading-bar>
+<!-- <mat-progress-bar mode="determinate" [value]="loadingBar.value$ | async"></mat-progress-bar> -->
+<!-- <ngx-loading-bar [includeSpinner]="false" color="red" height="4px" ref="http"></ngx-loading-bar> -->
+<navbar></navbar>
+<router-outlet (activate)="onActivate($event)"></router-outlet>

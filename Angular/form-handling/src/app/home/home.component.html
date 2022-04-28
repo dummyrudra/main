@@ -1,0 +1,38 @@
+<div class="container" *ngIf="showLoader">
+    <div class="row">
+        <div class="col text-center mt-5">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="!showLoader">
+
+    <div class="row">
+        <div class="col mt-0 shadow p-3 mb-2 bg-body rounded text-center" *ngIf="currentUser?._id">
+            <a class="text-dark" [routerLink]="['users/profile',currentUser?._id]" data-bs-toggle="tooltip"
+                data-bs-placement="bottom" [title]="'View '+currentUser?.name + ' Profile'">
+                <div class="float-start  me-2">
+                    <div class="text-center text-primary">
+
+                        <img [src]="imageUrl+currentUser?.file" class="img-responsive  rounded-circle"
+                            style="width:70px;height: 70px;" *ngIf="currentUser?.file"
+                            onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'" />
+                    </div>
+
+                    <h6 class="text-center">{{currentUser?.name}}</h6>
+                </div>
+            </a>
+
+            <post-form (newPostEvent)="addNewPost($event)" [user]="currentUser">
+            </post-form>
+
+        </div>
+        <div *ngIf="!currentUser?._id" class="col mt-5 alert alert-danger alert-dismissible fade show text-center">
+            <strong>Login to post</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <posts [user]="currentUser" [currentUser]="currentUser" [posts]="posts"></posts>
+    </div>
+</div>

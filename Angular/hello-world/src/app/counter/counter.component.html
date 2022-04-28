@@ -1,0 +1,13 @@
+<div class="constainer">
+    <div class="row">
+        <div class="offset-5 col-1">
+            <button class="btn btn-secondary" [disabled]="count<=0"  (click)="decrementCount()">-</button>
+        </div>
+        <div class="col-1  badge bg-info fw-bold fs-4 me-5">
+            {{count}}
+        </div>
+        <div class="col-1">
+            <button  class="btn btn-primary" [disabled]="count>=10"  (click)="incrementCount()">+</button>
+        </div>
+    </div>
+</div>

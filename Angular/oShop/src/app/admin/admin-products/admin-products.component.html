@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p>
+                <a routerLink="new" class="btn btn-primary">Add New Product</a>
+            </p>
+        </div>
+        <div class="col">
+            <input type="search" placeholder="Search..." #search (keyup)="filter(search.value)">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+            <ngx-datatable #productsTable class="material" [rows]="filteredProducts" [columnMode]="'force'"
+                [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="5"
+                [sorts]="[{prop:'name',dir:'asc'}]">
+
+                <ngx-datatable-column name="Title" prop="title">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.title}}
+                    </ng-template>
+
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Price" prop="price">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.price}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <a [routerLink]="row.key">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    </ng-template>
+
+                </ngx-datatable-column>
+
+            </ngx-datatable>
+
+
+            <!-- <table class="table table-borderless table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Price</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of (filteredProducts)">
+                        <td>{{p.title}}</td>
+                        <td>{{p.price}} &#8377;</td>
+                        <td><a [routerLink]="p.key">
+                                <i class="bi bi-pencil-square"></i>
+                            </a></td>
+                    </tr>
+                </tbody>
+            </table> -->
+            <!-- <div *ngIf="filteredProducts.length===0" class="text-danger">
+                There is no products available.
+            </div> -->
+        </div>
+    </div>
+</div>

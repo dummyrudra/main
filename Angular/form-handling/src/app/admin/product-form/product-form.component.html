@@ -1,0 +1,71 @@
+<div class="conatiner">
+    <div class="row">
+        <div class="col-6 mx-2 m-4 ">
+            <div class="">
+                <div class="text-danger" *ngIf="badInputError.length>0">{{badInputError}}
+                </div>
+            </div>
+            <form #f="ngForm" (ngSubmit)="save(f.value)">
+                <div>
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" #title="ngModel" name="title" [(ngModel)]="product.title" class="form-control"
+                        id="title" required>
+                    <div *ngIf="title.touched && !title.valid">
+                        <div class="text-danger" *ngIf="title.errors?.['required']">Title is required!
+                        </div>
+                    </div>
+                </div>
+                <label for="price" class="form-label">Price</label>
+                <div class="input-group">
+                    <span class="input-group-text"> &#8377;</span>
+                    <input type="number" #price="ngModel" name="price" [(ngModel)]="product.price" class="form-control"
+                        id="price" required min="0" max="1000000">
+                </div>
+                <div *ngIf="price.touched && !price.valid">
+                    <div class="text-danger" *ngIf="price.errors?.['required']">Price is required!
+                    </div>
+                    <div class="text-danger" *ngIf="price.errors?.['min']">Price must be atleast
+                        {{price?.errors?.['min']['min'] | currency:'INR'}}
+                    </div>
+                    <div class="text-danger" *ngIf="price.errors?.['max']">Price must be less than
+                        {{price?.errors?.['max']['max'] | currency:'INR'}}
+                    </div>
+                </div>
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select form-select-lg mb-3" #category="ngModel" name="category"
+                    [(ngModel)]="product.category._id" id="category" required>
+                    <option selected></option>
+                    <option *ngFor="let c of (categories$ | async)" [value]="c._id">{{c.name | titlecase}}</option>
+                </select>
+                <div *ngIf="category.touched && !category.valid">
+                    <div class="text-danger" *ngIf="category.errors?.['required']">Category is required!
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="imageUrl" class="form-label">Image Url</label>
+                    <input type="text" #imageUrl="ngModel" [(ngModel)]="product.imageUrl" name="imageUrl"
+                        class="form-control" id="imageUrl" required
+                        pattern='(\b(https?|ftp|file)://)?[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]'>
+                    <div *ngIf="imageUrl.touched && !imageUrl.valid">
+                        <div class="text-danger" *ngIf="imageUrl.errors?.['required']">ImageUrl is required!
+                        </div>
+                        <div class="text-danger" *ngIf="imageUrl.errors?.['pattern']">Please provide valid image
+                            URL!
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-outline-primary mt-2"
+                        [disabled]="!f.valid">{{id?'Update':'Save'}}</button>
+                    <button type="button" class="btn btn-outline-danger mt-2 mx-2" *ngIf="id" (click)="delete(id)"><i
+                            class="bi bi-trash-fill"></i></button>
+                    <button type="button" class="btn btn-outline-secondary mt-2 mx-2" (click)="back()">
+                        << Go Back </button>
+                </div>
+            </form>
+        </div>
+        <div class="col-4 m-4">
+            <product-card [product]="product" [showActions]="false"></product-card>
+        </div>
+    </div>
+</div>

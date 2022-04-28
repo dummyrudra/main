@@ -1,0 +1,8 @@
+{
+  "db": "mongodb+srv://taseenansari:taseen12345@cluster0.2o2yq.mongodb.net/cooper",
+  "jwt": "jwt",
+  "secrateKey": "12345678",
+  "host": "host",
+  "emailKey": "123@#abc",
+  "client_id": "339713964407-65dl6mfb0veiro9dl7d4757gbfsk9e58.apps.googleusercontent.com"
+}

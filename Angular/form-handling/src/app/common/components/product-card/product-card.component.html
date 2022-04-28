@@ -1,0 +1,41 @@
+<div class="card m-2" *ngIf="product.title || product.imageUrl || product.price">
+    <img [src]="product?.imageUrl" class="card-img-top" alt="..." *ngIf="product?.imageUrl"
+        style="height:15rem; width:100%" onerror="this.style.display='none'">
+    <div class="card-body">
+        <h5 class="card-title text-truncate" style="width:100%;">{{product?.title | titlecase}}</h5>
+        <p class="card-text text-truncate" style="width:100%;" *ngIf="product.price">
+            {{product?.price | currency:'INR'}}
+        </p>
+
+    </div>
+    <div class="card-footer d-grid gap-2 p-0 " *ngIf="showActions">
+
+        <div class="d-grid gap-2 p-0" *ngIf="!showLoader;else addToCartLoader">
+            <button class="btn btn-secondary border-0 rounded-0 " (click)="addToCart('add')"
+                *ngIf="getQuantity()===0;else toggleItem">Add To Cart</button>
+
+            <ng-template #toggleItem>
+                <div class="row p-0 m-0" style="width: 100%;">
+                    <div class="col-2 d-grid gap-2 p-0 m-0">
+                        <button class="btn btn-secondary border-0 rounded-0" (click)="addToCart('add')">+</button>
+                    </div>
+                    <div class="col text-center d-grid gap-2 p-0 m-0">
+                        <span>
+                            {{getQuantity()}}
+                        </span>
+                    </div>
+                    <div class="col-2 d-grid gap-2 p-0 m-0">
+                        <button class="btn btn-secondary border-0 rounded-0 " (click)="addToCart('remove')">-</button>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+        <ng-template #addToCartLoader>
+            <div class="text-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>

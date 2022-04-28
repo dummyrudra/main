@@ -1,0 +1,8 @@
+<div class="nav-container m-2 me-auto fixed-top">
+    <ul class="nav nav-pills">
+        <li class="nav-item" *ngFor="let navItem of navItems">
+            <a class="nav-link" [routerLink]="navItem.id==1?'users/login':'users/signup'"
+                [class.active]="navItem.id===selectedNav.id" (click)="switchTab(navItem.id)">{{navItem.name}}</a>
+        </li>
+    </ul>
+</div>

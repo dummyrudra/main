@@ -1,0 +1,10 @@
+{
+    "gitlab.repositories": {
+        "/home/rudra/Desktop/Cooper Deepak": {
+            "preferredRemoteName": "origin3"
+        }
+    },
+    "gitlab-mr.accessToken": "EkyVnySbRUb8ojVHjf3H",
+    "gitlab-mr.autoCommitChanges": true,
+    "gitlab-mr.targetBranch": "dev"
+}

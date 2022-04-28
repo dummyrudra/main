@@ -1,0 +1,27 @@
+pipeline {
+  agent any
+    
+  tools {nodejs "node"}
+    
+  stages {
+        
+    stage('Build') {
+      steps {
+        sh 'npm install'
+      }
+    }  
+    
+            
+    stage('Test') {
+      steps {
+        sh 'npm test'
+      }
+    }
+
+   stage('deploy') {
+      steps {
+        sh 'git push https://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@github.com/TaseenRudra/cooper-backend.git HEAD:master -f'
+      }
+    }
+  }
+}

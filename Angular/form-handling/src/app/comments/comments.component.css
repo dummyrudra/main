@@ -1,0 +1,9 @@
+.comments-bar::-webkit-scrollbar{
+    background-color:rgb(231, 147, 147);
+    width:7px;
+}
+    
+.comments-bar::-webkit-scrollbar-thumb {
+    background: rgb(94, 94, 204);
+    border-radius: 10px;
+}

@@ -1,0 +1,7 @@
+{
+  "jwt": "123@#abc",
+  "secrateKey": "12345678",
+  "host": "http://localhost:3000",
+  "db": "mongodb+srv://taseenansari:taseen12345@cluster0.2o2yq.mongodb.net/cooper-test",
+  "emailKey": "123@#abc"
+}

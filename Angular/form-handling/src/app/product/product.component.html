@@ -1,0 +1,39 @@
+<div class="container m-2 ">
+    <div class="row">
+        <div class="col-3 m-1 ">
+            <product-filter [category]="category"></product-filter>
+        </div>
+        <div class="col ms-3">
+            <div class="col ">
+                Show
+                <select #items (change)="changeItemsPerPage(items.value)">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                </select>
+
+                entries
+                <input type="search"
+                    style="padding:8px;margin:15px auto;border:0;outline:none;border-bottom: 1px solid;"
+                    placeholder="Type to filter the product list..." #search name="search" [(ngModel)]="searchQuery"
+                    (keyup)="searchProducts()">
+
+                <div *ngIf="filteredProducts.length===0" class="mt-3">
+                    There is no products to search.
+                </div>
+            </div>
+            <div class="d-inline-block clickable m-2" style="width:30%"
+                *ngFor="let product of filteredProducts | paginate:{id:'productPagination',currentPage,itemsPerPage,totalItems:filteredProducts.length}">
+                <product-card [product]="product" [shopping-cart]="cart">
+                </product-card>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-end">
+            <pagination-controls *ngIf="filteredProducts.length>itemsPerPage" id="productPagination"
+                (pageChange)="pageChanged($event)" [autoHide]="true"></pagination-controls>
+        </div>
+    </div>
+</div>

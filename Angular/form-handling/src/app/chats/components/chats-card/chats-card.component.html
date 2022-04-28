@@ -1,0 +1,68 @@
+<div class="chat-card" style="overflow:hidden;min-width:99.1%">
+    <div class="chat-card-header bg-secondary text-white p-1 row" style="border:0.1 px solid black">
+        <div class="receiver-info col-2 ">
+            <div class="float-start me-3">
+                <a [routerLink]="['/','users','profile',friend?.user?._id]" class="text-dark">
+                    <span class="d-inline-block text-center">
+                        <img [src]="imageUrl+friend?.user?.file" class="rounded-circle" style="width:40px;height:auto;"
+                            onload="this.style='display:inline-block;width:40px;'"
+                            onerror="this.style='display:none;width:0px'" #userImg />
+                        <i class='bi-image-alt' style="height:40px;width:40px" *ngIf="userImg.style.width==='0px' "></i>
+                    </span>
+                </a>
+            </div>
+            <div class="float-start mt-2">
+                <span class="fw-bolder ">{{ friend?.user?.name |
+                    titlecase}}</span>
+            </div>
+
+
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="chat-actions col-2 text-end">
+            <div class="float-start fs-2 clickable">
+                <i class="bi bi-camera-video-fill"></i>
+            </div>
+            <div class="fs-2 float-end clickable" ngbDropdown placement="bottom-right">
+                <i ngbDropdownToggle class="bi bi-three-dots-vertical" role="button" aria-expanded="false"></i>
+                <ul class="dropdown-menu" ngbDropdownMenu>
+                    <li ngbDropdownItem><a [routerLink]="['/','users','profile',friend?.user?._id]"
+                            class="dropdown-item">View</a></li>
+                    <li ngbDropdownItem><a class="dropdown-item">WallPaper</a></li>
+                    <li ngbDropdownItem><a class="dropdown-item" (click)="clearChat()">Clear chat</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="chat-card-body" #chatBody
+        style="max-height: 400px;min-height:400px;overflow-y:scroll;background-color:bisque;">
+        <div *ngFor="let chat of chats" class="m-2 me-2 w-100">
+            <div class="p-2 rounded-3 text-break" style="max-width:40%"
+                [ngClass]="{'self ':chat?.sender?._id===currentUser?._id,'bg-white friend':chat?.sender?._id!==currentUser?._id}">
+
+                <div class="text-start">
+                    {{chat?.message}}
+                    <div class="float-end clickable" ngbDropdown placement="bottom-right">
+                        <i ngbDropdownToggle class="bi bi-three-dots-vertical" role="button" aria-expanded="false"></i>
+                        <ul class="dropdown-menu p-0 " ngbDropdownMenu>
+                            <li ngbDropdownItem class="deleteMessage"><a class="dropdown-item deleteMessage"
+                                    (click)="clearChat(chat)">Delete
+                                    message</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="text-end text-muted fs-6 ">
+                    {{chat?.sender?.name }} {{chat?.updatedAt | date:'short'}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="chat-card-footer border p-2">
+        <chat-form [user]="currentUser" (chat)="sendMessage($event)" [friend]="friend?.user"></chat-form>
+    </div>
+</div>

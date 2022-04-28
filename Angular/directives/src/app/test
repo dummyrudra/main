@@ -1,0 +1,20 @@
+<div class="row g-3 align-items-center">
+  <div class="col-auto">
+    <label for="inputMovie" class="col form-label">Movie Name:</label>
+  </div>
+  <div class="col-auto">
+    <input type="text" id="inputMovie" class="form-control" [(ngModel)]="movieName" (keyup)="validateForm()" />
+  </div>
+</div>
+<div class="row g-3 align-items-center">
+  <div class="col-auto">
+    <label for="selectGenre" class="col form-label">Select Genre:</label>
+  </div>
+  <div class="col-auto">
+    <select [(ngModel)]="genre" id="selectGenre" (change)="validateForm()">
+      <option selected value="">Select Genre</option>
+      <option *ngFor="let genre of genres" value="{{ genre }}">{{ genre }}</option>
+    </select>
+    <div class="alert-danger my-4" *ngIf="errors[1]?.length>0" role="errorMsg">{{errors[1]}}</div>
+  </div>
+</div>

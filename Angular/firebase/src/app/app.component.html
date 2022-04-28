@@ -1,0 +1,67 @@
+<ul class="list-group">
+    {{ course$ | async | json}}
+    <li class="list-group-item" *ngFor="let item of courses$ | async">
+
+        <div>
+            <span>Id:</span>
+            <span>{{item.id}}</span>
+        </div>
+        <div>
+            <span>Name:</span>
+            <span>{{item.name}}</span>
+        </div>
+        <div>
+            <span>Author:</span>
+            <ul>
+                <li class="list-group-item">
+                    <div>
+                        <span>Id:</span>
+                        <span>{{item.author.id}}</span>
+                    </div>
+                    <div>
+                        <span>Name:</span>
+                        <span>{{item.author.name}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- <div>
+            <span>Id:</span>
+            <span>{{item.payload.val().id}}</span>
+        </div>
+        <div>
+            <span>Name:</span>
+            <span>{{item.payload.val().name}}</span>
+        </div>
+        <div>
+            <span>Author:</span>
+            <ul>
+                <li class="list-group-item">
+                    <div>
+                        <span>Id:</span>
+                        <span>{{item.payload.val().author.id}}</span>
+                    </div>
+                    <div>
+                        <span>Name:</span>
+                        <span>{{item.payload.val().author.name}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+
+    </li>
+</ul>
+
+<!-- <button class="btn btn-danger" (click)="ngOnDestroy()">Offline</button> -->
+
+
+
+
+
+
+
+
+
+
+
+<router-outlet></router-outlet>

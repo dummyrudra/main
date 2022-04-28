@@ -1,0 +1,116 @@
+const mongoose = require("mongoose");
+
+const { Schema, model } = mongoose;
+
+const taskSchema = new Schema(
+  {
+    SN: {
+      type: String,
+      default: "01",
+    },
+    projectID: {
+      type: Schema.Types.ObjectId,
+      ref: "projects",    //reference of projects model
+      required: true,
+      index:true
+    },
+    issueType: {
+      type: String,
+      enum: ["task", "epic", "story", "bug"],
+      required: true,
+    },
+    listID: {
+      type: Schema.Types.ObjectId,
+      ref: "List",
+      required: true,
+    },
+    sprint: {
+      type: Schema.Types.ObjectId,
+      ref: "Sprint",
+      required: true,
+    },
+    summary: {
+      type: String,
+      required:true
+    },
+    description: {
+      type: String,
+      default: null,
+    },
+    assigneeID: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      default: null,
+      index:true
+    },
+    labels: {
+      type: Array,
+    },
+    storyPointEstimate: {
+      type: Number,
+      default: null,
+    },
+    attachment: {
+      type: Array,
+    },
+    activity: [
+      {
+        message: String,
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: "user",  //reference of user model
+          required: true,
+          index:true
+        },
+        activityField:{
+          type:String,
+          default:null
+        },
+        activityType: {
+          type: String,
+          enum: ["comment", "history"],
+          default: "history",
+        },
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    reporter: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      index:true
+    },
+    subTask: {
+      type: Schema.Types.ObjectId,
+      ref: "Task",
+    },
+    watched: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
+    voted: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
+    flag: {
+      type: Boolean,
+      default: false,
+    },
+    isTrashed: {
+      type: Boolean,
+      default: false,
+      index:true
+    },
+  },
+  { timestamps: true }
+);
+
+const TaskModel = model("Task", taskSchema);
+
+module.exports = { TaskModel, taskSchema };

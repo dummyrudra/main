@@ -1,0 +1,112 @@
+<div class="container mt-2">
+    <div class="row">
+        <div class="col">
+            <p>
+                <button class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#categoryModal"
+                    (click)="removeSelectedCategory()">Add New
+                    Category</button>
+            </p>
+        </div>
+        <div class="col">
+            <input type="search" style="padding:8px;margin:15px auto;border:0;outline:none;border-bottom: 1px solid;"
+                placeholder="Type to filter the name column..." #search (keyup)="filter(search.value)">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+
+            <!-- <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">User</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><span *ngIf="filteredCategories.length===0">There is no category available.</span></tr>
+                    <tr *ngFor="let category of filteredCategories">
+                        <td>{{category?.name}}</td>
+                        <td>{{category?.user?.name}}</td>
+                        <td>
+                            <button class="btn btn-primary" (click)="selectCategory(category)" data-bs-toggle="modal"
+                                data-bs-target="#categoryModal">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-danger  mx-2" (click)="delete(category)"><i
+                                    class="bi bi-trash-fill"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table> -->
+            <ngx-datatable #categoryTable class="material" [rows]="filteredCategories" [columnMode]="'force'"
+                [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="5"
+                [sorts]="[{prop:'title',dir:'asc'}]">
+
+                <ngx-datatable-column name="Name" prop="name">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.name | titlecase}}
+                    </ng-template>
+
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="User" prop="user">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.user?.name }}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="" [sortable]="false">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button class="btn btn-primary" (click)="selectCategory(row)" data-bs-toggle="modal"
+                            data-bs-target="#categoryModal">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger  mx-2" (click)="delete(row)"><i
+                                class="bi bi-trash-fill"></i></button>
+                    </ng-template>
+
+                </ngx-datatable-column>
+
+            </ngx-datatable>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!--Category Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="craeteOrUpdateModel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="update">{{ selectedCategory?.name?'Update Category':'Add Category'}} </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="form" (ngSubmit)="selectedCategory?._id?updateCategory():addCategory()">
+                    <div class="mb-3 ">
+                        <label for="name" class="form-label me-2">Category Name</label>
+                        <input type="text" formControlName="name" name="name" [ngModel]="selectedCategory?.name || ''"
+                            id="name" class="form-control">
+
+                        <div *ngIf="!name.valid && name.touched">
+                            <div class="text-danger" *ngIf="name.errors?.['required']">Category Name is required</div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" [value]="selectedCategory?._id?'Update':'Add'"
+                            [disabled]="!form.valid" data-bs-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            (click)="removeSelectedCategory()">Close</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

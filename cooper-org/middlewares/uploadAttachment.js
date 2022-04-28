@@ -1,0 +1,19 @@
+const path  = require('path')
+const multer = require('multer')
+
+//upload attachment of task
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname + '/public/uploads/attachment'));
+    },
+    filename: function (req, file, cb) {
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+      cb(null, file.fieldname + '-' + uniqueSuffix)
+    }
+  })
+  
+  const upload = multer({ storage: storage });
+
+
+  module.exports = upload

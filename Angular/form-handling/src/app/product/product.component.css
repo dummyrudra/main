@@ -1,0 +1,19 @@
+.product-container::-webkit-scrollbar {
+    width: 10px;
+    overflow-x: hidden;
+}
+
+/* Track */
+.product-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.product-container::-webkit-scrollbar-thumb {
+    background:burlywood;
+}
+
+/* Handle on hover */
+.product-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

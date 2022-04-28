@@ -1,0 +1,11 @@
+.bi{
+  font-size: 2.5em;
+  cursor: pointer;
+}
+.bi-star-fill {
+  color:#008000;
+}
+
+.bi-star{
+  color: black;
+}

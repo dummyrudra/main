@@ -1,0 +1,6 @@
+{
+    "db":"db",
+    "jwt":"jwt",
+    "secrateKey":"key",
+    "host":"host"
+}

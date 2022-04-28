@@ -1,0 +1,162 @@
+{
+    "CommonAPI":{
+        "USER_NOT_FOUND":{
+            "message":"User Not Found",
+            "status":404
+        },
+        "TASK_NOT_FOUND":{
+            "message":"Task Not Found",
+            "status":404
+        },
+        "PROJECT_NOT_FOUND":{
+            "message":"Project Not Found",
+            "status":404
+        },
+        "SPRINT_NOT_FOUND":{
+            "message":"Sprint Not Found",
+            "status":404
+        },
+        "PLAN_NOT_FOUND":{
+            "message":"Plan Not Found",
+            "status":404
+        },
+        "LIST_NOT_FOUND":{
+            "message":"List Not Found",
+            "status":404
+        },
+        "INVALID_ID_REQUEST":{
+            "message":"Invalid ID",
+            "status":400
+        }
+    },
+    "SignUpAPI":{
+        "USER_HAS_ALREADY_SIGNUP":{
+            "message":"User has already SignUp",
+            "status":409
+        },
+        "USER_SIGNUP_FAILED":{
+            "message":"User SignUp Failed",
+            "status":400
+        }
+    },
+    "DeleteAPI":{
+        "USER_DELETE_SUCCESS":{
+            "message":"User has been deleted Successfully",
+            "status":200
+        }
+    },
+    "UserAPI":{
+        "AVATAR_UPDATED_SUCCESS":{
+            "message":"Profile Photo Updated",
+            "status":200
+        },
+        "PASSWORD_FORMAT_MISMATCH":{
+            "message":"Password condition not satisfied",
+            "status":400
+        },
+        "UNAUTHORIZED_USER":{
+            "message":"Unauthorized User",
+            "status":401
+        },
+        "PASSWORD_MISMATCH":{
+            "message":"Password not correct",
+            "status":400
+        }
+    },
+    "TaskAPI":{
+        "CREATE_TASK_FAILED":{
+            "message":"Create Task Failed",
+            "status":400
+        },
+        "CREATE_SUB_TASK_FAILED":{
+            "message":"Create Sub Task Failed",
+            "status":400
+        },
+        "UPDATE_TASK_FAILED":{
+            "message":"Task has Not Updated",
+            "status":400
+        },
+        "DELETE_TASK_SUCCESS":{
+            "message":"Task has been Delete Successfully",
+            "status":200
+        },
+        "ATTACHMENT_SUCCESS":{
+            "message":"Attachment Added Successfully",
+            "status":200
+        },
+        "ATTACHMENT_FAILED":{
+            "message":"Attachment Added Failed",
+            "status":400
+        },
+        "DELETE_TASK_FAILED":{
+            "message":"Task has been Not Deleted",
+            "status":400
+        },
+        "UNAUTHORIZED_USER":{
+            "message":"Unauthorized User",
+            "status":401
+        },
+        "LIST_NOT_FOUND":{
+            "message":"List Not Found ON This Project",
+            "status":404
+        },
+        "TASK_ALREADY_EXIST":{
+            "message":"Task already exist",
+            "status":409
+        },
+        "TASK_ASSIGNEE_NOT_EXIST":{
+            "message":"assignee not exist",
+            "status":404
+        }
+    },
+    "PlanAPI":{
+        "PLAN_ALREADY_EXIST":{
+            "message":"Plan Already Exist",
+            "status":409
+        }
+    },
+    "ListAPI":{
+        "LIST_ADDED_SUCCESS":{
+            "message":"List Added Successfully",
+            "status":200
+        },
+        "LIST_ADDED_FAILED":{
+            "message":"List Added failed",
+            "status":400
+        },
+        "LIST_UPDATE_SUCCESS":{
+            "message":"List Update Successfully",
+            "status":200
+        },
+        "LIST_UPDATE_FAILED":{
+            "message":"List update failed",
+            "status":400
+        },
+        "LIST_DELETE_SUCCESS":{
+            "message":"List Delete Successfully",
+            "status":200
+        },
+        "LIST_DELETE_FAILED":{
+            "message":"List Delete failed",
+            "status":400
+        },
+        "LIST_ALREADY_EXIST":{
+            "message":"ListName already in list",
+            "status":409
+        },
+        "LIST_NOT_FOUND_PREVIOUS_LIST":{
+            "message":"List not found in previous list",
+            "status":404
+        },
+        "MINIMUM_ONE_LIST":{
+           "message":"A Project must contains atleast one list.",
+           "status":400 
+        }
+    },
+    "OrganizationApi":{
+        "ORGANIZATION_NOT_IN_USER":{
+            "message":"Organization unauthorized permissions",
+            "status":401 
+         }
+    }
+}

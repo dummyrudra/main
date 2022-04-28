@@ -1,0 +1,130 @@
+{
+  "Authapi": {
+    "ok": {
+      "OTPMatch": {
+        "status": 200,
+        "message": "successfully match"
+      },
+      "passwordChanged": {
+        "status": 200,
+        "message": "successfully password changed"
+      }
+    },
+    "badRequest": {
+      "PasswordMissMatched": {
+        "status": 400,
+        "message": "password Miss match"
+      },
+      "OTPMissMatched": {
+        "status": 400,
+        "message": "OTP Miss match"
+      },
+      "OldPassword": {
+        "status": 400,
+        "message": "old password used"
+      },
+      "invalidCurrentPassword": {
+        "status": 400,
+        "message": "Invalid current password."
+      }
+    },
+    "UnAuthorized": {
+      "linkExpired": {
+        "status": 401,
+        "message": "link expired"
+      },
+      "unAuthorizedUser": {
+        "status": 401,
+        "message": "User have no permission"
+      }
+    },
+    "notFound": {
+      "userNotFound": {
+        "status": 404,
+        "message": "User not found"
+      }
+    }
+  },
+  "projectApi": {
+    "ok": {
+      "deleted": {
+        "status": 200,
+        "message": "successfully deleted"
+      },
+      "updated": {
+        "status": 200,
+        "message": "successfully updated"
+      }
+    },
+    "badRequest": {
+      "badKey": {
+        "status": 400,
+        "message": "Key already exist"
+      },
+      "badName": {
+        "status": 400,
+        "message": "Name already exist"
+      },
+      "sameData": {
+        "status": 400,
+        "message": "No changes reflect"
+      }
+    },
+    "UnAuthorized": {
+      "unauthorized": {
+        "status": 401,
+        "message": "Access Denied"
+      }
+    },
+    "notFound": {
+      "projectNotFound": {
+        "status": 404,
+        "message": "Project Not found!"
+      },
+      "organizationNotFound": {
+        "status": 401,
+        "message": "Organization Not found!"
+      },
+      "projectLeadNotFound": {
+        "status": 404,
+        "message": "Project Lead Not found!"
+      }
+    }
+  },
+  "organizationApi": {
+    "ok": {
+      "success": {
+        "status": 200,
+        "message": "successfully done"
+      }
+    },
+    "badRequest": {
+      "alreadyExist": {
+        "status": 400,
+        "message": "Organization already exist"
+      }
+    }
+  },
+  "serverError": {
+    "serverError": {
+      "status": 500,
+      "message": "somthing went wrong"
+    }
+  },
+  "badRequest": {
+    "passwordNotSatisfied": {
+      "status": 400,
+      "message": "Password condition not satisfied"
+    }
+  },
+  "unAuthorized": {
+    "unAuthorized": {
+      "status": 401,
+      "message": "Access Denied"
+    },
+    "tokenExpired": {
+      "status": 401,
+      "message": "Token expired"
+    }
+  }
+}

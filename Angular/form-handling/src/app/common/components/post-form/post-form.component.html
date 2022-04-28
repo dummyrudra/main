@@ -1,0 +1,49 @@
+<div class="container-fluid ">
+    <div class="row">
+        <div class="col-12 shadow bg-body rounded">
+            <form [formGroup]="form" (ngSubmit)="post()">
+                <div class="mb-3">
+                    <!-- <input type="text" formControlName="message" name="message" id="message" class="form-control"
+                        placeholder="Post something....."> -->
+                    <!-- <textarea formControlName="message" name="message" id="message" class="form-control"
+                        placeholder="Post something....." style="resize: none"></textarea> -->
+                    <angular-editor formControlName="message" [config]="editorConfig"></angular-editor>
+                    <div *ngIf="!message.valid && message.touched">
+                        <div class="text-danger" *ngIf="message.errors?.['required']">message is required</div>
+                    </div>
+                </div>
+                <div class="mb-3 mt-1 text-center">
+                    <label class="btn  btn-outline-success">
+
+                        <i class="bi bi-images"></i>
+
+                        <input type="file" style="display:none" class="form-control" name="postFile"
+                            (change)="onFileSelect($event)" formControlName="postFile" name="postFile" id="postFile"
+                            multiple />
+
+                        <div *ngIf="!postFile.valid && postFile.touched">
+                            <div class="text-danger" *ngIf="postFile.errors?.['invalidFileExtension']">Only jpg and
+                                png
+                                files
+                                are allowed</div>
+                        </div>
+                    </label>
+                    <button type="submit" class="btn btn-primary mx-2"
+                        [disabled]="!form.valid || (!message.value && images.length===0)">Post</button>
+                </div>
+                <!-- <quill-editor class="content-editor" [placeholder]="''"> </quill-editor> -->
+            </form>
+        </div>
+    </div>
+    <div class="row text-center" *ngIf="images.length>0">
+        <div class="offset-1 col-2 text-primary mt-2 mb-3" *ngFor="let file of images">
+            <div class="text-center" style="height:100px;width:100px;">
+                <img [src]="file | sanitizerUrl" alt="..." class="img-fluid img-thumbnail rounded"
+                    onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'"
+                    style="height:100%;width:100%;" />
+                <i class="bi bi-x-circle-fill mx-2 clickable" (click)="deletePostImage(file)"></i>
+            </div>
+        </div>
+
+    </div>
+</div>

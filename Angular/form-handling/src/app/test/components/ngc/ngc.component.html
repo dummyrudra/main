@@ -1,0 +1,37 @@
+<p class="text-danger text-center fs-2 mt-5 d-inline-block">Lazy Loading</p>
+
+<!-- <a class="btn btn-secondary mx-3" [routerLink]="['../test',5,10]" [queryParams]="{page:2,sortBy:'name'}"
+    *ngIf="!this.route.snapshot.params['month']">Set Params and
+    Query Parameters</a> -->
+<button class="btn btn-success mx-3" (click)="navigate()">Change Params</button>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3 offset-3">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    Params
+                </li>
+                <li class="list-group-item">
+                    Month : {{route.snapshot.paramMap.get('month')}}
+                </li>
+                <li class="list-group-item">
+                    Year : {{route.snapshot.paramMap.get('year')}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-3">
+            <ul class="list-group">
+                <li class="list-group-item active">
+                    Query String
+                </li>
+                <li class="list-group-item">
+                    page : {{this.route.snapshot.queryParams['page']}}
+                </li>
+                <li class="list-group-item">
+                    sortBy : {{this.route.snapshot.queryParams['sortBy']}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="zippy">
+    <div class="zippy-heading">
+        <h3>{{title}} <i class="bi " [ngClass]="{'bi-chevron-up':!isExapanded,'bi-chevron-down':isExapanded}"
+                (click)="expand()"></i></h3>
+    </div>
+
+    <div class="zippy-body" [hidden]="!isExapanded">
+        <ng-content></ng-content>
+    </div>
+</div>

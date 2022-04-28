@@ -1,0 +1,190 @@
+{
+  "Authapi": {
+    "ok": {
+      "OTPMatch": {
+        "status": 200,
+        "message": "successfully match"
+      },
+      "passwordChanged": {
+        "status": 200,
+        "message": "successfully password changed"
+      }
+    },
+    "badRequest": {
+      "PasswordMissMatched": {
+        "status": 400,
+        "message": "password Miss match"
+      },
+      "OTPMissMatched": {
+        "status": 400,
+        "message": "OTP Miss match"
+      },
+      "OldPassword": {
+        "status": 400,
+        "message": "old password used"
+      },
+      "invalidCurrentPassword": {
+        "status": 400,
+        "message": "Invalid current password."
+      }
+    },
+    "UnAuthorized": {
+      "linkExpired": {
+        "status": 401,
+        "message": "link expired"
+      },
+      "unAuthorizedUser": {
+        "status": 401,
+        "message": "User have no permission"
+      }
+    },
+    "notFound": {
+      "userNotFound": {
+        "status": 404,
+        "message": "User not found"
+      }
+    }
+  },
+  "projectApi": {
+    "ok": {
+      "deleted": {
+        "status": 200,
+        "message": "successfully deleted"
+      },
+      "updated": {
+        "status": 200,
+        "message": "successfully updated"
+      },
+      "MEMBERS_ADDED": {
+        "status": 200,
+        "message": "Members successfully added to project."
+      },
+      "MEMBERS_REMOVED": {
+        "status": 200,
+        "message": "Member successfully removed from project"
+      }
+    },
+    "badRequest": {
+      "badKey": {
+        "status": 400,
+        "message": "Key already exist"
+      },
+      "badName": {
+        "status": 400,
+        "message": "Name already exist"
+      },
+      "sameData": {
+        "status": 400,
+        "message": "No changes reflect"
+      },
+      "MEMBER_NOT_FOUND": {
+        "status": 400,
+        "message": "Member not found!"
+      }
+    },
+    "UnAuthorized": {
+      "unauthorized": {
+        "status": 401,
+        "message": "Access Denied"
+      }
+    },
+    "notFound": {
+      "projectNotFound": {
+        "status": 400,
+        "message": "Project Not found!"
+      },
+      "organizationNotFound": {
+        "status": 401,
+        "message": "Organization Not found!"
+      },
+      "projectLeadNotFound": {
+        "status": 400,
+        "message": "Project Lead Not found!"
+      }
+    }
+  },
+  "organizationApi": {
+    "ok": {
+      "success": {
+        "status": 200,
+        "message": "successfully done"
+      },
+      "ORGANIZATION_UPDATED": {
+        "status": 200,
+        "message": "Organization successfully updated."
+      },
+      "MEMBER_ADDED_TO_ORGANIZATION": {
+        "status": 200,
+        "message": "User successfully added to organization."
+      },
+      "MEMBER_REMOVED_FROM_ORGANIZATION": {
+        "status": 200,
+        "message": "User successfully removed from organization."
+      }
+    },
+    "badRequest": {
+      "alreadyExist": {
+        "status": 400,
+        "message": "Organization already exist"
+      },
+      "ORGANIZATION_NAME_ALREADY_EXISTS": {
+        "status": 400,
+        "message": "Organization Name is already taken!"
+      },
+      "ORGANIZATION_URL_ALREADY_EXISTS": {
+        "status": 400,
+        "message": "Organization URL is already taken!"
+      },
+      "ORGANIZATION_NOT_FOUND": {
+        "status": 400,
+        "message": "Organization not found!"
+      },
+      "ORGANIZATION_MEMBER_ALREADY_EXISTS": {
+        "status": 400,
+        "message": "User is already associated with organization."
+      },
+      "ORGANIZATION_MEMBER_NOT_FOUND": {
+        "status": 400,
+        "message": "User is not associated with this organization."
+      }
+    }
+  },
+  "serverError": {
+    "serverError": {
+      "status": 500,
+      "message": "somthing went wrong"
+    }
+  },
+  "badRequest": {
+    "passwordNotSatisfied": {
+      "status": 400,
+      "message": "Password condition not satisfied"
+    }
+  },
+  "unAuthorized": {
+    "unAuthorized": {
+      "status": 401,
+      "message": "Access Denied"
+    },
+    "tokenExpired": {
+      "status": 401,
+      "message": "Token expired"
+    },
+    "UNABLE_TO_REMOVE_PROJECT_OWNER": {
+      "status": 401,
+      "message": "Unauthorised! cannot remove project owner from project member."
+    },
+    "ORGANIZATION_MEMBER_NOT_FOUND": {
+      "status": 401,
+      "message": "Unauthorised! you are not part of this organization."
+    },
+    "UNAUTHORIZED_REMOVE_ORGANIZATION_MEMBER": {
+      "status": 401,
+      "message": "Unauthorised! you do not have permission to remove user from organization"
+    },
+    "UNAUTHORIZED_JOIN_ORGANIZATION_MEMBER": {
+      "status": 401,
+      "message": "Unauthorised! you do not have permission to add user to organization"
+    }
+  }
+}

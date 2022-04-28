@@ -1,0 +1,119 @@
+<nav class="navbar navbar-expand-lg navbar-light shadow p-3 rounded sticky-top"
+    [style.backgroundColor]="navBarBackground">
+    <div class="container-fluid">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="navbar-brand"
+            routerLink="/">Navbar</a>
+        <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed"
+            aria-controls="media-navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" [ngbCollapse]="isMenuCollapsed" id="media-navbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        routerLink="">Home</a>
+                </li>
+                <li class="nav-item" *ngIf="auth.isLoggedIn()">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        routerLink="users">Users</a>
+                </li>
+                <li class="nav-item" *ngIf="auth.isLoggedIn()">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        routerLink="chats">Chats</a>
+                </li>
+                <!-- <li class="nav-item" *ngIf="auth.isLoggedIn()">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" routerLink="posts">Posts</a>
+                </li> -->
+                <li class="nav-item float-end">
+
+                </li>
+                <li class="nav-item" *ngIf="!auth.isLoggedIn()">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        routerLink="users/signup">Sign Up</a>
+                </li>
+                <li class="nav-item" *ngIf="!auth.isLoggedIn()">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        routerLink="users/login">Sign In</a>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        [routerLink]="['oshop','products']">Oshop</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        [routerLink]="['oshop','shopping-carts']">
+                        Shopping Carts
+                        <span class="badge bg-danger rounded-circle p-2"
+                            style="min-width: 30px;">{{this.cartService.shoppingCartItemCount.getValue()}}</span>
+                    </a>
+                </li>
+                <!-- <li class="nav-item" *ngIf="auth.isLoggedIn()">
+                                <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link" routerLink="posts">Posts</a>
+                            </li> -->
+                <li class="nav-item float-end">
+
+                </li>
+                <li class="nav-item" *ngIf="!auth.isLoggedIn()">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        routerLink="users/signup">Sign Up</a>
+                </li>
+                <li class="nav-item" *ngIf="!auth.isLoggedIn()">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        routerLink="users/login">Sign In</a>
+                </li>
+
+            </ul>
+
+            <ul class="navbar-nav me-5 mb-2 mb-lg-0 float-end">
+                <li class="nav-item">
+                    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" class="nav-link"
+                        [routerLink]="['oshop','products']">OShop</a>
+                </li>
+                <div ngbDropdown>
+                    <li class="nav-item dropdown" *ngIf="auth.isLoggedIn()">
+                        <a ngbDropdownToggle routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                            class="nav-link " id="myprofile" role="button" aria-expanded="false">
+
+                            <div class="float-start text-center text-primary me-2">
+
+                                <img [src]="imageUrl+currentUser?.file" class="img-responsive rounded-circle"
+                                    style="width:30px;height: 30px;"
+                                    onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'">
+                            </div>
+                            {{currentUser?.name}}
+                        </a>
+
+                        <ul ngbDropdownMenu class="dropdown-menu dropdown-menu-light" aria-labelledby="myprofile">
+                            <li ngbDropdownItem>
+                                <a class="dropdown-item" [routerLink]="['users','profile',currentUser?._id]">
+                                    View Profile
+                                    <span class="rounded-circle text-white text-center p-1 me-1"
+                                        [style.background-color]="stringToHslColor(currentUser?.name)">{{shortName(currentUser?.name)}}</span>
+                                </a>
+                            </li>
+                            <li ngbDropdownItem>
+                                <a class="dropdown-item" [routerLink]="['oshop','admin','products']"
+                                    *ngIf="currentUser?.isAdmin">
+                                    Manage Products
+                                </a>
+                            </li>
+                            <li ngbDropdownItem>
+                                <a class="dropdown-item" [routerLink]="['oshop','admin','categories']"
+                                    *ngIf="currentUser?.isAdmin">
+                                    Manage Categories
+                                </a>
+                            </li>
+
+                            <li ngbDropdownItem class="logout"><a class="dropdown-item "
+                                    (click)="auth.logout()">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>

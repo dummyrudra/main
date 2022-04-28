@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row">
+        <div class="col shadow p-3 mb-5 bg-body rounded">
+            <form [formGroup]="form" (ngSubmit)="comment()">
+                <div class="input-group mb-3">
+                    <a [routerLink]="['../../../users/profile/',user?._id]" class="text-dark text-decoration-none"
+                        *ngIf="user?.file">
+                        <img [src]="imageUrl+user?.file" class="p-0 me-2 border-0 img-responsive"
+                            style="width:50px;height: 50px;"
+                            onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'" />
+                    </a>
+                    <input type="text" formControlName="comment" name="comment" id="comment" class="form-control"
+                        placeholder="Type a comment.....">
+                    <!-- <div *ngIf="!comment.valid && comment.touched">
+                        <div class="text-danger" *ngIf="comment.errors?.['required']">comment is required</div>
+
+                    </div> -->
+
+                    <button type="submit" class="btn btn-primary input-group-text" [disabled]="!form.valid"><i
+                            class="bi bi-send-fill"></i></button>
+                </div>
+                <!-- <quill-editor class="content-editor" [placeholder]="''"> </quill-editor> -->
+            </form>
+        </div>
+    </div>
+</div>

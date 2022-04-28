@@ -1,0 +1,54 @@
+<div class="container" *ngIf="showLoader">
+    <div class="row">
+        <div class="col text-center mt-5">
+
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="!showLoader">
+    <div class="row">
+        <div class=" mt-2 shadow p-3 mb-2 bg-body rounded text-center" *ngIf="user?._id">
+            <div class="text-center text-primary">
+
+                <img [src]="imageUrl+user?.file" class="img-responsive rounded-circle"
+                    style="width:100px;height: 100px;" *ngIf="user?.file"
+                    onerror="this.parentElement.innerHTML='<i class=bi-image-alt></i>'" />
+            </div>
+            <h6 class="text-center">{{user?.name}}</h6>
+
+            <div *ngIf="user?._id!==currentUser?._id">
+                <button class="btn btn-sm " (click)="handleFriendRequest(user)" [ngClass]="
+                                            {
+                                                'btn-outline-danger':user?.status==='Remove Friend','btn-outline-primary':user?.status==='Send Request','btn-outline-secondary':user?.status==='Cancel Request','btn-outline-success':user?.status==='sent'
+                                            }">
+                    <i class="bi " [ngClass]="
+                                                {
+                                                'bi-dash-circle-fill':user?.status==='Remove Friend','bi-person-plus-fill':user?.status==='Send Request','bi-x-circle-fill':user?.status==='Cancel Request','bi-check-circle':user?.status==='sent'
+                                            }
+                                                "></i>
+                    <span class="mx-1">{{user?.status==="sent"?'Accept':user?.status}}</span>
+                </button>
+                <button class="btn btn-sm btn-outline-secondary mx-2" *ngIf="user?.status==='sent'"
+                    (click)="handleFriendRequest(user,'cancel')">
+                    <i class="bi bi-x-circle-fill"></i>
+                    <span class="mx-1">Cancel</span>
+                </button>
+            </div>
+            <friends-card [friends]="user?.friends"></friends-card>
+            <div>
+                <post-form *ngIf="user?._id===currentUser?._id" (newPostEvent)="addNewPost($event)" [user]="user">
+                </post-form>
+            </div>
+        </div>
+        <posts *ngIf="user?._id" [user]="user" [currentUser]="currentUser" [posts]="posts"></posts>
+    </div>
+    <div class="row">
+        <div *ngIf="!user?._id" class=" col mt-5 alert alert-danger alert-dismissible fade show text-center">
+            <strong>Cannot find user!</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
